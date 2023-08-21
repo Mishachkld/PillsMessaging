@@ -38,20 +38,18 @@ public class ItemPill {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    public void setStatusIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public void setAvailable(boolean available) {

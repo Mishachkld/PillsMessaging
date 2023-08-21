@@ -35,7 +35,7 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pill_list, container, false);
-        if (rootView!= null){
+        if (rootView != null) {
             recyclerView = rootView.findViewById(R.id.recycler_view_list_items);
             recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
             viewModel = new ViewModelProvider(this).get(PillsViewModel.class);
@@ -58,7 +58,7 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
 
     }
 
-    private void deleteItemOnClick(ItemPill itemPill){
+    private void deleteItemOnClick(ItemPill itemPill) {
         Snackbar.make(recyclerView, "Удалить элемент? ", Snackbar.LENGTH_LONG).setAction("Удалить", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +76,14 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
     }
 
     @Override
-    public void longItemClickListener(int position) {
-
+    public void checkBoxClickListener(int position) {
+        data.get(position).setAvailable(!data.get(position).isAvailable());
+        viewModel.updateOneItem(data.get(position));
+        String text;
+        if (data.get(position).isAvailable())
+            text = "Notification On";
+        else
+            text = "Notification Off";
+        Snackbar.make(recyclerView, text, Snackbar.LENGTH_SHORT).show();
     }
 }

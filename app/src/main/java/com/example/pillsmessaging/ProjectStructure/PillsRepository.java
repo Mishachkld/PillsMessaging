@@ -53,6 +53,22 @@ public class PillsRepository {
                 pillDao.deleteItem(itemPill);
             }
         });
-
     }
+
+
+    public void updateItem(ItemPill itemPill){
+        PillRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                pillDao.updateOneItem(itemPill);
+            }
+        });
+    }
+
+    public LiveData<List<ItemPill>> getAvailablePills() {
+        return pillDao.loadAllBySelected(true);
+    }
+
+
+
 }

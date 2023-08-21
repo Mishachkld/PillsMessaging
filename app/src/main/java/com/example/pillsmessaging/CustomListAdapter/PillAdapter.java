@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pillsmessaging.DataBasePills.ItemPill;
 import com.example.pillsmessaging.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
         if (!data.isEmpty()) {
             viewHolder.getDescription().setText(data.get(position).getDescription());
             viewHolder.getTime().setText(String.valueOf(data.get(position).getId()));
+            viewHolder.getSwitchBox().setChecked(data.get(position).isAvailable());
         }
     }
 
@@ -70,12 +73,14 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
 
         private final TextView time;
         private final TextView pillTextView;
+        private final SwitchMaterial checker;
 
 
         public ViewHolder(View view, RecyclerViewAction recyclerViewInterface) {
             super(view);
             pillTextView = view.findViewById(R.id.description_text);
             time = view.findViewById(R.id.time_text);
+            checker = view.findViewById(R.id.switchMaterial);
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -84,6 +89,18 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
                 }
             });
 
+            checker.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterface != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.checkBoxClickListener(position);
+                        }
+
+                    }
+                }
+            });
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,6 +128,9 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
 
         public TextView getTime() {
             return time;
+        }
+        public SwitchMaterial getSwitchBox() {
+            return checker;
         }
 
     }

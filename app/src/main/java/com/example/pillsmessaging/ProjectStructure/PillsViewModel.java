@@ -13,7 +13,6 @@ import java.util.List;
 
 public class PillsViewModel extends AndroidViewModel {
     private LiveData<List<ItemPill>> allPills;
-    private final MutableLiveData<ItemPill> selectedItem = new MutableLiveData<>();
     private PillsRepository repository;
 
 
@@ -35,8 +34,16 @@ public class PillsViewModel extends AndroidViewModel {
         repository.deleteItem(itemPills);
     }
 
+    public void updateOneItem(ItemPill itemPill){
+        repository.updateItem(itemPill);
+    }
+
     public LiveData<List<ItemPill>> getAllPills(){
         return allPills;
+    }
+
+    public  LiveData<List<ItemPill>> getAvailableItems(){
+        return repository.getAvailablePills();
     }
 
 }
