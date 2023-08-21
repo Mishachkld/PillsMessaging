@@ -1,0 +1,48 @@
+package com.example.pillsmessaging;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.os.Bundle;
+import android.view.View;
+
+import com.example.pillsmessaging.DataBasePills.ItemPill;
+import com.example.pillsmessaging.ProjectStructure.PillsViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+public class MainActivity extends AppCompatActivity {
+    private FloatingActionButton add_button;
+    private PillsViewModel viewModel;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        if (savedInstanceState == null)
+          setFragment(new PillListFragment());
+
+        add_button = findViewById(R.id.add_button);
+        viewModel = new ViewModelProvider(this).get(PillsViewModel.class);
+
+        add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.insert(new ItemPill("Hello, world!"));
+                Snackbar.make(view, "One object added :)", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.list_fragment, fragment)
+                .commit();
+
+    }
+
+}
