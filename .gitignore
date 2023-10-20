@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/test/java/com/example/pillsmessaging/
+/app/src/androidTest/java/com/example/pillsmessaging/

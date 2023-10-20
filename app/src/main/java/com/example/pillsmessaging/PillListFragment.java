@@ -86,4 +86,11 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
             text = "Notification Off";
         Snackbar.make(recyclerView, text, Snackbar.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void descriptionClickListener(int position, String description) {
+        data.get(position).setDescription(description);
+        viewModel.updateOneItem(data.get(position));
+        Snackbar.make(recyclerView, "Updated", Snackbar.LENGTH_SHORT).show();
+    }
 }

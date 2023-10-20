@@ -4,16 +4,19 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pillsmessaging.AddItemDialogFragment;
 import com.example.pillsmessaging.DataBasePills.ItemPill;
 import com.example.pillsmessaging.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,13 +77,15 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
         private final TextView time;
         private final TextView pillTextView;
         private final SwitchMaterial checker;
+        private final ImageButton deleteButton;
 
 
         public ViewHolder(View view, RecyclerViewAction recyclerViewInterface) {
             super(view);
-            pillTextView = view.findViewById(R.id.description_text);
             time = view.findViewById(R.id.time_text);
+            pillTextView = view.findViewById(R.id.description_text);
             checker = view.findViewById(R.id.switchMaterial);
+            deleteButton = view.findViewById(R.id.delete_button);
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -97,12 +102,25 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
                         if (position != RecyclerView.NO_POSITION){
                             recyclerViewInterface.checkBoxClickListener(position);
                         }
-
                     }
                 }
             });
 
-            view.setOnClickListener(new View.OnClickListener() {
+
+            pillTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterface != null){
+                        int position = getAdapterPosition();
+                        String data = String.valueOf(pillTextView.getText());
+                        if (position != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.descriptionClickListener(position, data);
+                        }
+                    }
+                }
+            });
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (recyclerViewInterface != null){
@@ -114,9 +132,6 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
                     }
                 }
             });
-
-
-
             // Define click listener for the ViewHolder's View
 
         }
@@ -131,6 +146,9 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
         }
         public SwitchMaterial getSwitchBox() {
             return checker;
+        }
+        public ImageButton getDeleteButton() {
+            return deleteButton;
         }
 
     }

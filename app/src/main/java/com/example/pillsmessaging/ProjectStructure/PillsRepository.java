@@ -3,7 +3,6 @@ package com.example.pillsmessaging.ProjectStructure;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.RoomDatabase;
 
 import com.example.pillsmessaging.DataBasePills.ItemPill;
 import com.example.pillsmessaging.DataBasePills.PillDao;

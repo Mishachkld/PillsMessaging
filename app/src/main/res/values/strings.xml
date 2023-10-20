@@ -2,7 +2,11 @@
     <string name="app_name">Pills Messaging</string>
     <string name="text_pill">Напиши что-нибудь</string>
     <string name="time">12:30</string>
+    <string name="ready">Готово</string>
+    <string name="append">Добавить</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todo_action_button">Add new item</string>
+    <string name="cancel">отмена</string>
 </resources>

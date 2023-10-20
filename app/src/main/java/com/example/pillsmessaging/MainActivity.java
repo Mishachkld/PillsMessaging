@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               // new AddItemDialogFragment(view.getContext()).onCreateDialog(savedInstanceState).show();
                 viewModel.insert(new ItemPill("Hello, world!"));
                 Snackbar.make(view, "One object added :)", Snackbar.LENGTH_LONG).show();
             }
