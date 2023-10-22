@@ -40,7 +40,6 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
             recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
             viewModel = new ViewModelProvider(this).get(PillsViewModel.class);
             viewModel.getAllPills().getValue();
-//          data = new ArrayList<>();  data.add(new ItemPill("Amigos"));
             adapter = new PillAdapter(data, this);
             recyclerView.setAdapter(adapter);
         }
@@ -89,8 +88,6 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
 
     @Override
     public void descriptionClickListener(int position, String description) {
-        data.get(position).setDescription(description);
-        viewModel.updateOneItem(data.get(position));
-        Snackbar.make(recyclerView, "Updated", Snackbar.LENGTH_SHORT).show();
+       // new AddItemDialogFragment(getContext()).show(getChildFragmentManager(), AddItemDialogFragment.TAG);
     }
 }
