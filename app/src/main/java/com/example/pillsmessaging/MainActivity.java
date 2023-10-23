@@ -7,10 +7,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.pillsmessaging.DataBasePills.ItemPill;
+import com.example.pillsmessaging.DialogFragments.AddItemDialogFragment;
 import com.example.pillsmessaging.ProjectStructure.PillsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton add_button;

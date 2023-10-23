@@ -4,8 +4,11 @@
     <string name="time">12:30</string>
     <string name="ready">Готово</string>
     <string name="append">Добавить</string>
-    <string name="dialog_text">Description</string>
+    <string name="dialog_text_view">Description</string>
     <string name="todo_action_button">Add</string>
     <string name="dialog_title">Add new item</string>
-    <string name="cancel">отмена</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_title_update_item">Update description of item</string>
+    <string name="dialog_btn_text_update_item">Update</string>
+    <string name="hint_edit_text_dialog">Write description</string>
 </resources>

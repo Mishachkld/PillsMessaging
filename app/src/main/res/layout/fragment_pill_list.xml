@@ -6,15 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_list_items"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         tools:listitem="@layout/pills_list_item"
         app:layoutManager="LinearLayoutManager">
-
-
 
     </androidx.recyclerview.widget.RecyclerView>
 

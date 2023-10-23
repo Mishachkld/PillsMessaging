@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.pillsmessaging.CustomListAdapter.PillAdapter;
 import com.example.pillsmessaging.CustomListAdapter.RecyclerViewAction;
 import com.example.pillsmessaging.DataBasePills.ItemPill;
+import com.example.pillsmessaging.DialogFragments.ChangeItemDialogFragment;
 import com.example.pillsmessaging.ProjectStructure.PillsViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -88,6 +89,7 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
 
     @Override
     public void descriptionClickListener(int position, String description) {
+        new ChangeItemDialogFragment(data.get(position)).show(getChildFragmentManager(),"UPDATE_ITEM");
        // new AddItemDialogFragment(getContext()).show(getChildFragmentManager(), AddItemDialogFragment.TAG);
     }
 }
