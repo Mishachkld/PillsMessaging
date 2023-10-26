@@ -15,6 +15,8 @@ public class PillsViewModel extends AndroidViewModel {
     private LiveData<List<ItemPill>> allPills;
     private PillsRepository repository;
 
+    private boolean isNeedOnlyAvailable;
+
 
 
     public PillsViewModel(@NonNull Application application) {
@@ -30,6 +32,7 @@ public class PillsViewModel extends AndroidViewModel {
     public void addItem(ItemPill... itemPills){
         repository.insertAll(itemPills);
     }
+
     public void deleteItem(ItemPill itemPills){
         repository.deleteItem(itemPills);
     }
@@ -39,9 +42,17 @@ public class PillsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<ItemPill>> getAllPills(){
+        if (isNeedOnlyAvailable)
+            return getAvailableItems();
         return allPills;
     }
+    public boolean getIsNeedOnlyAvailable(){
+        return isNeedOnlyAvailable;
+    }
 
+    public void setIsNeedOnlyAvailable(boolean isNeedOnlyAvailable){
+        this.isNeedOnlyAvailable = isNeedOnlyAvailable;
+    }
     public  LiveData<List<ItemPill>> getAvailableItems(){
         return repository.getAvailablePills();
     }

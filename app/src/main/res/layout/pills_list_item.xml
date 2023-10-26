@@ -63,7 +63,7 @@
                 android:layout_width="48sp"
                 android:layout_height="48sp"
                 android:background="@drawable/baseline_delete_forever_24"
-                android:contentDescription="@string/todo_action_button" />
+                android:contentDescription="@string/enable_action_button" />
 
 
 

@@ -3,9 +3,11 @@
     <string name="text_pill">Напиши что-нибудь</string>
     <string name="time">12:30</string>
     <string name="ready">Готово</string>
-    <string name="append">Добавить</string>
+    <string name="dialog_append">Add</string>
     <string name="dialog_text_view">Description</string>
-    <string name="todo_action_button">Add</string>
+    <string name="enable_action_button">Show only enable</string>
+    <string name="disable_action_button">Show only disable</string>
+    <string name="show_menu">Show only active</string>
     <string name="dialog_title">Add new item</string>
     <string name="cancel">Cancel</string>
     <string name="dialog_title_update_item">Update description of item</string>

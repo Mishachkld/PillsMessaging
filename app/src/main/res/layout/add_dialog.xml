@@ -19,6 +19,7 @@
     <EditText
         android:id="@+id/text_input_edit_text"
         android:layout_width="256sp"
+        android:minHeight="48dp"
         android:layout_height="wrap_content"
         android:layout_margin="4sp"
         android:autofillHints="nothing"
@@ -33,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12sp"
-        android:text="@string/todo_action_button"
+        android:text="@string/dialog_append"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
