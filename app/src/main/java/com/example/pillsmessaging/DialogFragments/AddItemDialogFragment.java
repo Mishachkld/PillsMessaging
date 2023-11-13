@@ -42,7 +42,7 @@ public class AddItemDialogFragment extends DialogFragment {
         builder.setView(view);
         builder.setTitle(R.string.dialog_title);
 
-        viewModel = new ViewModelProvider(this).get(PillsViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(PillsViewModel.class);
         addButton = view.findViewById(R.id.add_button);
         editText = view.findViewById(R.id.text_input_edit_text);
         text = view.findViewById(R.id.text_item_description);

@@ -13,6 +13,8 @@ import java.util.List;
 
 public class PillsViewModel extends AndroidViewModel {
     private LiveData<List<ItemPill>> allPills;
+
+    private MutableLiveData<ItemPill> liveData;
     private PillsRepository repository;
 
     private boolean isNeedOnlyAvailable;

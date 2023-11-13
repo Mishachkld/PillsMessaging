@@ -41,7 +41,7 @@ public class ChangeItemDialogFragment extends DialogFragment {
         View view = getLayoutInflater().inflate(R.layout.add_dialog, null);
         builder.setView(view);
 
-        viewModel = new ViewModelProvider(this).get(PillsViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(PillsViewModel.class);
         addButton = view.findViewById(R.id.add_button);
         editText = view.findViewById(R.id.text_input_edit_text);
         textDescription = view.findViewById(R.id.text_item_description);

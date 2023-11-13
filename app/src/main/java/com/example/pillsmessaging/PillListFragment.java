@@ -37,9 +37,10 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pill_list, container, false);
         if (rootView != null) {
+            setHasOptionsMenu(true);
             recyclerView = rootView.findViewById(R.id.recycler_view_list_items);
             recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
-            viewModel = new ViewModelProvider(this).get(PillsViewModel.class);
+            viewModel = new ViewModelProvider(requireActivity()).get(PillsViewModel.class);
             viewModel.getAllPills().getValue();
             adapter = new PillAdapter(data, this);
             recyclerView.setAdapter(adapter);
