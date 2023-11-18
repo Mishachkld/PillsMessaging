@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,6 +34,8 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
     private List<ItemPill> data;
     private PillAdapter adapter;
 
+    private boolean isShowAvailable = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,22 +47,46 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
             recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
             viewModel = new ViewModelProvider(requireActivity()).get(PillsViewModel.class);
             viewModel.getAllPills().getValue();
+            viewModel.getIsNeedOnlyAvailable().postValue(false);
             adapter = new PillAdapter(data, this);
             recyclerView.setAdapter(adapter);
         }
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_sort) {
+            isShowAvailable = !isShowAvailable;
+            viewModel.getIsNeedOnlyAvailable().postValue(isShowAvailable);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel.getAllPills().observe(getViewLifecycleOwner(), itemPills -> {
-            data = itemPills;
-            adapter.updateData(data);
+        viewModel.getIsNeedOnlyAvailable().observe(getViewLifecycleOwner(), showAvailable -> {
+            if (isShowAvailable)
+                viewModel.getAvailableItems().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
+            else
+                viewModel.getAllPills().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
         });
+        //viewModel.getAvailableItems().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
+
+
 
 
     }
+
 
     private void deleteItemOnClick(ItemPill itemPill) {
         Snackbar.make(recyclerView, "Удалить элемент? ", Snackbar.LENGTH_LONG).setAction("Удалить", new View.OnClickListener() {
@@ -90,7 +119,7 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
 
     @Override
     public void descriptionClickListener(int position, String description) {
-        new ChangeItemDialogFragment(data.get(position)).show(getChildFragmentManager(),"UPDATE_ITEM");
-       // new AddItemDialogFragment(getContext()).show(getChildFragmentManager(), AddItemDialogFragment.TAG);
+        new ChangeItemDialogFragment(data.get(position)).show(getChildFragmentManager(), "UPDATE_ITEM");
+        // new AddItemDialogFragment(getContext()).show(getChildFragmentManager(), AddItemDialogFragment.TAG);
     }
 }

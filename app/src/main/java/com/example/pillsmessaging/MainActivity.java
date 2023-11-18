@@ -49,20 +49,6 @@ public class MainActivity extends AppCompatActivity {
         return Navigation.findNavController(this, R.id.nav_graph).navigateUp();
     }*/
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_favorite) {
-
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 }

@@ -12,13 +12,9 @@ import com.example.pillsmessaging.DataBasePills.ItemPill;
 import java.util.List;
 
 public class PillsViewModel extends AndroidViewModel {
-    private LiveData<List<ItemPill>> allPills;
-
-    private MutableLiveData<ItemPill> liveData;
-    private PillsRepository repository;
-
-    private boolean isNeedOnlyAvailable;
-
+    private final LiveData<List<ItemPill>> allPills;
+    private MutableLiveData<Boolean> isNeedOnlyAvailable;
+    private final PillsRepository repository;
 
 
     public PillsViewModel(@NonNull Application application) {
@@ -28,34 +24,33 @@ public class PillsViewModel extends AndroidViewModel {
     }
 
 
-    public void insert(ItemPill itemPills){
+    public void insert(ItemPill itemPills) {
         repository.insert(itemPills);
     }
-    public void addItem(ItemPill... itemPills){
+
+    public void addItem(ItemPill... itemPills) {
         repository.insertAll(itemPills);
     }
 
-    public void deleteItem(ItemPill itemPills){
+    public void deleteItem(ItemPill itemPills) {
         repository.deleteItem(itemPills);
     }
 
-    public void updateOneItem(ItemPill itemPill){
+    public void updateOneItem(ItemPill itemPill) {
         repository.updateItem(itemPill);
     }
 
-    public LiveData<List<ItemPill>> getAllPills(){
-        if (isNeedOnlyAvailable)
-            return getAvailableItems();
+    public LiveData<List<ItemPill>> getAllPills() {
         return allPills;
     }
-    public boolean getIsNeedOnlyAvailable(){
+
+    public MutableLiveData<Boolean> getIsNeedOnlyAvailable() {
+        if (isNeedOnlyAvailable == null)
+            isNeedOnlyAvailable = new MutableLiveData<>();
         return isNeedOnlyAvailable;
     }
 
-    public void setIsNeedOnlyAvailable(boolean isNeedOnlyAvailable){
-        this.isNeedOnlyAvailable = isNeedOnlyAvailable;
-    }
-    public  LiveData<List<ItemPill>> getAvailableItems(){
+    public LiveData<List<ItemPill>> getAvailableItems() {
         return repository.getAvailablePills();
     }
 

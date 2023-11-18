@@ -16,7 +16,7 @@ public interface PillDao {
     @Query("SELECT * FROM pills WHERE id IN (:id)")
     List<ItemPill> loadAllByIds(int[] id);
 
-    @Query("SELECT * FROM pills WHERE checker IN (:isAvailable)")
+    @Query("SELECT * FROM pills WHERE  checker = :isAvailable")
     LiveData<List<ItemPill>> loadAllBySelected(boolean isAvailable);
 
     @Insert
