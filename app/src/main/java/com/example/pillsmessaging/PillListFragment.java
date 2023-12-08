@@ -63,8 +63,8 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_sort) {
-            isShowAvailable = !isShowAvailable;
-            viewModel.getIsNeedOnlyAvailable().postValue(isShowAvailable);
+            boolean result = Boolean.TRUE.equals(viewModel.getIsNeedOnlyAvailable().getValue());
+            viewModel.getIsNeedOnlyAvailable().postValue(!result);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -75,33 +75,28 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel.getIsNeedOnlyAvailable().observe(getViewLifecycleOwner(), showAvailable -> {
-            if (isShowAvailable)
-                viewModel.getAvailableItems().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
+            viewModel.getAllPills().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
+            Snackbar.make(view, "Stat: " + showAvailable, Snackbar.LENGTH_LONG).show();
+            /*if (showAvailable)
+                viewModel.getAvailableItems().observe(getViewLifecycleOwner(),
+                        itemPills -> adapter.updateData(data = itemPills));
             else
-                viewModel.getAllPills().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
+                viewModel.getAllPills().observe(getViewLifecycleOwner(),
+                        itemPills -> adapter.updateData(data = itemPills));*/
         });
-        //viewModel.getAvailableItems().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
-
-
-
-
+        //
     }
 
 
     private void deleteItemOnClick(ItemPill itemPill) {
-        Snackbar.make(recyclerView, "Удалить элемент? ", Snackbar.LENGTH_LONG).setAction("Удалить", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.deleteItem(itemPill);
-            }
-        }).show();
-
-
+        Snackbar.make(recyclerView, "Удалить элемент? ", Snackbar.LENGTH_LONG).setAction("Удалить",
+                (v) -> viewModel.deleteItem(itemPill)).show();
     }
 
 
     @Override
     public void itemClickListener(int position) {
+
         deleteItemOnClick(data.get(position));
     }
 
