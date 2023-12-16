@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,15 +39,14 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pill_list, container, false);
         if (rootView != null) {
             setHasOptionsMenu(true);
             recyclerView = rootView.findViewById(R.id.recycler_view_list_items);
             recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
             viewModel = new ViewModelProvider(requireActivity()).get(PillsViewModel.class);
-            viewModel.getAllPills().getValue();
+            //viewModel.getAllPills().getValue();
             viewModel.getIsNeedOnlyAvailable().postValue(false);
             adapter = new PillAdapter(data, this);
             recyclerView.setAdapter(adapter);
@@ -68,29 +68,28 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel.getIsNeedOnlyAvailable().observe(getViewLifecycleOwner(), showAvailable -> {
-            viewModel.getAllPills().observe(getViewLifecycleOwner(), itemPills -> adapter.updateData(data = itemPills));
-            Snackbar.make(view, "Stat: " + showAvailable, Snackbar.LENGTH_LONG).show();
-            /*if (showAvailable)
-                viewModel.getAvailableItems().observe(getViewLifecycleOwner(),
-                        itemPills -> adapter.updateData(data = itemPills));
-            else
-                viewModel.getAllPills().observe(getViewLifecycleOwner(),
-                        itemPills -> adapter.updateData(data = itemPills));*/
+        viewModel.getAllPills().observe(getViewLifecycleOwner(), itemPills -> {
+            this.data = itemPills;
+            updateDataFromDB();
         });
-        //
+
+
     }
 
 
+    private void updateDataFromDB() {
+
+        viewModel.getIsNeedOnlyAvailable().observe(getViewLifecycleOwner(), isShowAvailable -> adapter.updateData(data, isShowAvailable));
+
+    }
+
     private void deleteItemOnClick(ItemPill itemPill) {
-        Snackbar.make(recyclerView, "Удалить элемент? ", Snackbar.LENGTH_LONG).setAction("Удалить",
-                (v) -> viewModel.deleteItem(itemPill)).show();
+        Snackbar.make(recyclerView, "Удалить элемент?", Snackbar.LENGTH_LONG).setAction("Удалить", (v) -> viewModel.deleteItem(itemPill)).show();
     }
 
 
@@ -104,11 +103,10 @@ public class PillListFragment extends Fragment implements RecyclerViewAction {
     public void checkBoxClickListener(int position) {
         data.get(position).setAvailable(!data.get(position).isAvailable());
         viewModel.updateOneItem(data.get(position));
+        //isShowAvailable = !isShowAvailable;
         String text;
-        if (data.get(position).isAvailable())
-            text = "Notification On";
-        else
-            text = "Notification Off";
+        if (data.get(position).isAvailable()) text = "Notification On";
+        else text = "Notification Off";
         Snackbar.make(recyclerView, text, Snackbar.LENGTH_SHORT).show();
     }
 

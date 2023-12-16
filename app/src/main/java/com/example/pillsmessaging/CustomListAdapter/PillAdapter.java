@@ -64,7 +64,18 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
     public void updateData(List<ItemPill> data) {
         this.data = data;
         notifyDataSetChanged();
+    }
 
+    public void updateData(List<ItemPill> data, boolean isAvailable) {
+        List<ItemPill> resultArray = new ArrayList<>();
+        if (isAvailable) {
+            for (ItemPill item : data) {
+                if (item.isAvailable()) {
+                    resultArray.add(item);
+                }
+            }
+        } else resultArray = data;
+        updateData(resultArray);
     }
 
 
@@ -82,52 +93,40 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
             pillTextView = view.findViewById(R.id.description_text);
             checker = view.findViewById(R.id.switchMaterial);
             deleteButton = view.findViewById(R.id.delete_button);
-            view.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    Snackbar.make(view, "Element " + getAdapterPosition() + " clicked.", Snackbar.LENGTH_LONG).show();
-                    return true;
-                }
+            view.setOnLongClickListener(v -> {
+                Snackbar.make(view, "Element " + getAdapterPosition() + " clicked.", Snackbar.LENGTH_LONG).show();
+                return true;
             });
 
-            checker.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.checkBoxClickListener(position);
-                        }
+            checker.setOnClickListener(v -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.checkBoxClickListener(position);
                     }
                 }
             });
 
 
-            pillTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
-                        String data = String.valueOf(pillTextView.getText());
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.descriptionClickListener(position, data);
-                        }
+            pillTextView.setOnClickListener(v -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    String data = String.valueOf(pillTextView.getText());
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.descriptionClickListener(position, data);
                     }
                 }
             });
 
             deleteButton.setOnClickListener((v) -> {
-                        if (recyclerViewInterface != null) {
-                            int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION) {
-                                recyclerViewInterface.itemClickListener(position);
-                            }
-
-                        }
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.itemClickListener(position);
                     }
-            );
+                }
+            });
             // Define click listener for the ViewHolder's View
-
         }
 
 
