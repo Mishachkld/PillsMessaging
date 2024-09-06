@@ -12,9 +12,26 @@ public class ItemPill {
         this.description = description;
     }
 
+    public ItemPill(long time, String description) {
+        this(description);
+        if (globalTime > 0) {
+            this.globalTime = time;
+        } else {
+            this.globalTime = 0;
+        }
+    }
+
     public ItemPill(String time, String description) {
-        this.description = description;
         this.time = time;
+        this.description = description;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void generateGlobalTime() {
+
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -25,6 +42,17 @@ public class ItemPill {
     private String description;
     @ColumnInfo(name = "checker")
     private boolean isAvailable;
+
+    @Ignore
+    private long globalTime;
+
+    public long getGlobalTime() {
+        return globalTime;
+    }
+
+    public void setGlobalTime(long globalTime) {
+        this.globalTime = globalTime;
+    }
 
     public int getId() {
         return id;
@@ -42,8 +70,9 @@ public class ItemPill {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
-        this.description =  description;
+        this.description = description;
     }
 
 

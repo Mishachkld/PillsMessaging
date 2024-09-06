@@ -48,7 +48,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         if (!data.isEmpty()) {
             viewHolder.getDescription().setText(data.get(position).getDescription());
-            viewHolder.getTime().setText(String.valueOf(data.get(position).getId()));
+            viewHolder.getTime().setText(String.valueOf(data.get(position).getTime()));
             viewHolder.getSwitchBox().setChecked(data.get(position).isAvailable());
         }
     }
@@ -123,6 +123,14 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.ViewHolder> {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         recyclerViewInterface.itemClickListener(position);
+                    }
+                }
+            });
+            time.setOnClickListener((v) -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.timeClickListener(position, time.getText().toString());
                     }
                 }
             });

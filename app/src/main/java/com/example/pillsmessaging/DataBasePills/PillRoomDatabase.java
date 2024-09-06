@@ -37,24 +37,4 @@ public abstract class PillRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-
-            // If you want to keep data through app restarts,
-            // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-                PillDao dao = INSTANCE.pillDao();
-                dao.delete();
-
-                ItemPill itemPill = new ItemPill("Amigo");
-                dao.insertAll(itemPill);
-                itemPill = new ItemPill("World");
-                dao.insertAll(itemPill);
-            });
-        }
-    };
 }

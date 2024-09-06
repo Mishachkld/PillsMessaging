@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,14 +15,14 @@ import com.example.pillsmessaging.DataBasePills.ItemPill;
 import com.example.pillsmessaging.ProjectStructure.PillsViewModel;
 import com.example.pillsmessaging.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 
 public class ChangeItemDialogFragment extends DialogFragment {
 
-    private ItemPill item;
+    private final ItemPill item;
     private PillsViewModel viewModel;
-    private EditText editText;
+    private EditText editTextDescription;
+    private EditText editTextTime;
     private MaterialButton addButton;
     private MaterialTextView textDescription;
 
@@ -43,15 +42,18 @@ public class ChangeItemDialogFragment extends DialogFragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(PillsViewModel.class);
         addButton = view.findViewById(R.id.add_button);
-        editText = view.findViewById(R.id.text_input_edit_text);
+        editTextDescription = view.findViewById(R.id.text_input_edit_text);
+        editTextTime = view.findViewById(R.id.time_text_input_edit_text);
         textDescription = view.findViewById(R.id.text_item_description);
         addButton.setText(R.string.dialog_btn_text_update_item);
         textDescription.setText(item.getDescription());
 
         addButton.setOnClickListener(v -> {
-            String text = editText.getText().toString();
-            if (!text.equals("")) {
-                item.setDescription(text);
+            String descriptionText = editTextDescription.getText().toString();
+            String timeText = editTextTime.getText().toString();
+            if (!descriptionText.equals("")) {
+                item.setDescription(descriptionText);
+                item.setTime(timeText);
                 viewModel.updateOneItem(item);
                 dismiss();
             }

@@ -1,21 +1,21 @@
 package com.example.pillsmessaging;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
+import android.os.Bundle;
+
+import com.example.pillsmessaging.Constants.Constants;
 import com.example.pillsmessaging.DialogFragments.AddItemDialogFragment;
-import com.example.pillsmessaging.ProjectStructure.PillsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton add_button;
-    private PillsViewModel viewModel;
 
 
     @Override
@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-
         if (savedInstanceState == null)
             setFragment(new PillListFragment());
 
@@ -43,12 +42,4 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.list_fragment, fragment)
                 .commit();
     }
-
-   /* @Override
-    public boolean onSupportNavigateUp() {
-        return Navigation.findNavController(this, R.id.nav_graph).navigateUp();
-    }*/
-
-
-
 }

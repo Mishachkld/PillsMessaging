@@ -18,19 +18,17 @@ public class PillsRepository {
     private MutableLiveData<Boolean> isNeedOnlyAvailable;
 
 
-
-    public PillsRepository(Application application){
+    public PillsRepository(Application application) {
         PillRoomDatabase database = PillRoomDatabase.getDatabase(application);
         pillDao = database.pillDao();
         allPills = pillDao.getAll();
     }
 
-
     public LiveData<List<ItemPill>> getAllPills() {
         return allPills;
     }
 
-    public void insert(ItemPill itemPills){
+    public void insert(ItemPill itemPills) {
         PillRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +38,8 @@ public class PillsRepository {
 
 
     }
-    public void insertAll(ItemPill... itemPills){
+
+    public void insertAll(ItemPill... itemPills) {
         PillRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -49,7 +48,7 @@ public class PillsRepository {
         });
     }
 
-    public void deleteItem(ItemPill itemPill){
+    public void deleteItem(ItemPill itemPill) {
         PillRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -59,7 +58,7 @@ public class PillsRepository {
     }
 
 
-    public void updateItem(ItemPill itemPill){
+    public void updateItem(ItemPill itemPill) {
         PillRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -71,9 +70,6 @@ public class PillsRepository {
     public LiveData<List<ItemPill>> getAvailablePills() {
         return pillDao.loadAllBySelected(true);
     }
-
-
-
 
 
 }

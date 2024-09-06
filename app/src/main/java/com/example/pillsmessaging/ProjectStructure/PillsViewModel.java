@@ -1,12 +1,16 @@
 package com.example.pillsmessaging.ProjectStructure;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.pillsmessaging.Constants.Constants;
 import com.example.pillsmessaging.DataBasePills.ItemPill;
 
 import java.util.List;
